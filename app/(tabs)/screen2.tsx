@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Home() {
+export default function Settings() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home</Text>
-      <Text style={styles.text}>
-        Welcome to the Home screen.
-      </Text>
+      <Text style={styles.title}>Settings</Text>
+      <Text style={styles.text}>• Notifications</Text>
+      <Text style={styles.text}>• Dark Mode</Text>
+      <Text style={styles.text}>• About App</Text>
     </View>
   );
 }
@@ -20,9 +20,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
+    marginBottom: 10,
   },
   text: {
     fontSize: 16,
-    marginTop: 10,
+    marginTop: 5,
   },
 });

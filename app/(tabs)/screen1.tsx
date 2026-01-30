@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Home() {
+export default function Profile() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home</Text>
-      <Text style={styles.text}>
-        Welcome to the Home screen.
-      </Text>
+      <Text style={styles.title}>My Profile</Text>
+      <Text style={styles.text}>Name: Charles Ryan D. Robianes</Text>
+      <Text style={styles.text}>Email: charlesrobianes@gmail.com</Text>
     </View>
   );
 }
@@ -20,9 +19,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
+    marginBottom: 10,
   },
   text: {
     fontSize: 16,
-    marginTop: 10,
   },
 });
