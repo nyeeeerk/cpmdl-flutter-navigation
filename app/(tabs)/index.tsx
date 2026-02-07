@@ -3,8 +3,6 @@ import {
   FlatList,
   Image,
   ImageSourcePropType,
-
-
   ListRenderItem,
   SafeAreaView,
   StyleSheet,
@@ -114,15 +112,19 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    marginBottom: 20,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
+       backgroundColor: '#fff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 8, 
+    shadowColor: '#4A90E2',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.7,
+    shadowRadius: 10, 
+    elevation: 15, 
   },
   cardImage: {
     width: '100%',
