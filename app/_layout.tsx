@@ -1,67 +1,74 @@
-import { Slot } from 'expo-router'; // Import this to handle navigation
+import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import LottieView from 'lottie-react-native';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, StyleSheet, View } from 'react-native';
 
-// Keep the native splash visible while we prepare
+
 SplashScreen.preventAutoHideAsync().catch(console.warn);
 
 export default function RootLayout() {
-  const [isAppReady, setAppReady] = useState(false);
-  const [isAnimationFinished, setAnimationFinished] = useState(false);
+  const [appReady, setAppReady] = useState(false);
+  const [splashAnimationFinished, setSplashAnimationFinished] = useState(false);
+  
+  
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     async function prepare() {
       try {
-        // Load fonts or make API calls here
+       
+        await Promise.all([
+           
+           new Promise((resolve) => setTimeout(resolve, 3000)), 
+        ]);
       } catch (e) {
         console.warn(e);
       } finally {
-        // 1. App is ready to render
         setAppReady(true);
-        // 2. Hide the static native splash so the Lottie becomes visible
+        
         await SplashScreen.hideAsync();
+
+       
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 500, 
+          useNativeDriver: true,
+        }).start(() => {
+          setSplashAnimationFinished(true);
+        });
       }
     }
     prepare();
   }, []);
 
-  const onAnimationFinish = () => {
-    setAnimationFinished(true);
-  };
+  return (
+    <View style={{ flex: 1 }}>
+      {}
+      {appReady && <Slot />}
 
-  // 1. If the app is loading data, show nothing (native splash handles this)
-  if (!isAppReady) {
-    return null;
-  }
-
-  // 2. If data is ready but animation is still playing, show Lottie
-  if (!isAnimationFinished) {
-    return (
-      <View style={styles.container}>
-        <LottieView
-          source={require('./assets/loading.json')} // Adjust path if needed
-          autoPlay
-          loop={false} // Must be false to trigger finish
-          onAnimationFinish={onAnimationFinish}
-          style={styles.lottie}
-        />
-      </View>
-    );
-  }
-
-  // 3. Animation finished: Render the Expo Router Slot
-  // This essentially says: "Now load whatever is in app/index.tsx or app/(tabs)"
-  return <Slot />;
+      {}
+      {!splashAnimationFinished && (
+        <Animated.View pointerEvents="none" style={[styles.splashContainer, { opacity: fadeAnim }]}>
+          <LottieView
+            source={require('./assets/loading.json')}
+            autoPlay
+            loop={true} 
+            style={styles.lottie}
+          />
+        </Animated.View>
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  splashContainer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff', // Make sure background matches your theme
+    zIndex: 10, 
   },
   lottie: {
     width: '50%',
