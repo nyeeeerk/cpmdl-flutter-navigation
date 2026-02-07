@@ -102,9 +102,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   headerTitle: {
-    fontSize: 32,
-    fontWeight: '800',
-    color: '#333',
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#2e2d2d', 
+    textShadowColor: '#4A90E2', 
+    textShadowOffset: { width: 0, height: 0 }, 
+    textShadowRadius: 10, 
   },
   headerSubtitle: {
     fontSize: 16,
